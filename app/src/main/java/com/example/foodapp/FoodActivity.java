@@ -22,7 +22,7 @@ public class FoodActivity extends AppCompatActivity {
     ListView foodListView;
     List<Food> foodList = new ArrayList<>();
     Button addBtn;
-    int location;
+    String location = "";
     FoodAdapter foodAdapter;
 
     @Override
@@ -51,7 +51,7 @@ public class FoodActivity extends AppCompatActivity {
                 intent.putExtra("title",food.getTitle());
                 intent.putExtra("des",food.getDescription());
                 intent.putExtra("price",String.valueOf(food.getPrice()));
-                location = position;
+                location = String.valueOf(position);
                 startActivityForResult(intent,100);
 
             }
@@ -62,6 +62,7 @@ public class FoodActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FoodActivity.this,ItemActivity.class);
+                location = "";
                 startActivityForResult(intent,100);
             }
         });
@@ -79,11 +80,10 @@ public class FoodActivity extends AppCompatActivity {
         int thumbnail = R.drawable.img_pib;
 
         Food food = new Food(title, description, price, thumbnail);
-
-        if (location > location -1){
+        if (location.equals("")){
             foodList.add(food);
-        }else{
-            foodList.set(location,food);
+        }else {
+            foodList.set(Integer.parseInt(location),food);
         }
         foodAdapter.notifyDataSetChanged();
     }
